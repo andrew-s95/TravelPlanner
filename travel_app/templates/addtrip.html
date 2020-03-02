@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Create a Trip</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Hello, {{user_id.first_name}}! Create a trip!</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="/logout">Logout</a></li>
+                <li><a href="/dashboard">Dashboard</a></li>
+                </ul>
+            </div>
+        </nav>
+        <form action="/add_trip" method="POST">
+            {%csrf_token%}
+            <label for="destination">Destination</label>
+            <input type="text" name="destination" id="destination"><br>
+            <label for="start_date">Start Date:</label>
+            <input type="date" name="start_date" id="start_date"><br>
+            <label for="end_date">End Date</label>
+            <input type="date" name="end_date" id="end_date">
+            <label for="plan">Plan</label>
+            <input type="text" name="plan" id="plan"><br>
+            <button class='btn-small blue accent-5'>Create</button> 
+        </form><br>
+        <form action="/dashboard" method="GET">
+            <button class='btn-small blue accent-5'>Cancel</button>
+        </form>
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li {% if message.tags %} class="{{message.tags}}" {% endif %}>
+                    {{message}}
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+</body>
+</html>

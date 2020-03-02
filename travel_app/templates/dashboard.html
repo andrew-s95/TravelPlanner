@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <title>Dashboard</title>
+</head>
+<body>
+    <div class="container">
+        <nav>
+            <div class="nav-wrapper">
+                <a href="#" class="brand-logo">Hello, {{user_id.first_name}}!</a>
+                <ul id="nav-mobile" class="right hide-on-med-and-down">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="/logout">Log Out</a></li>
+                    <li><a href="/trip/add">Create a new trip!</a></li>
+                </ul>
+            </div>
+        </nav>
+        <h4>Your Trips:</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Destination</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Plan</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if all_trips %}
+                {% for trips in all_trips %}
+                <tr>
+                    {% if trips.user.id == request.session.user_id %}
+                    <td><a href="/trip/{{trips.id}}">{{trips.destination}}</a></td>
+                    <td>{{trips.start_date}}</td>
+                    <td>{{trips.end_date}}</td>
+                    <td>{{trips.plan}}</td>
+                    <td><a href="/delete/{{trips.id}}">Remove</a> | <a href="/trip/edit/{{trips.id}}">Edit</a></td>
+                    {% endif %}
+                </tr>
+                {% endfor %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
